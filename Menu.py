@@ -1,4 +1,4 @@
-import random #for random number 
+import random
 root="Test"
 dic={"ayanm":"1234","roshm":"5678"} #format-username:password
 cnt1=3
