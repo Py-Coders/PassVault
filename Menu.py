@@ -1,4 +1,4 @@
-import random
+import random #for random number 
 root="Test"
 dic={"ayanm":"1234","roshm":"5678"} #format-username:password
 cnt1=3
@@ -93,7 +93,7 @@ if cnt4==1:
                         t=passwordgen()
                         print(t)
                         s=input("Enter the PASSWORD:- ")
-                elif sug "noNONo":
+                elif sug in "noNONo":
                     s=input("Enter the PASSWORD:- ")
                 print("Data added successfuly.")
             elif p==2:
