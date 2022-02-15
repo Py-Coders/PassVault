@@ -1,0 +1,5 @@
+pyperclip
+cryptography
+uuid
+fernet
+pybase64
