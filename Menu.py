@@ -93,7 +93,7 @@ if cnt4==1:
                         t=passwordgen()
                         print(t)
                         s=input("Enter the PASSWORD:- ")
-                elif sug in "noNONo":
+                elif sug "noNONo":
                     s=input("Enter the PASSWORD:- ")
                 print("Data added successfuly.")
             elif p==2:
