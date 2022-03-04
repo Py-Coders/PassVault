@@ -212,7 +212,7 @@ def loginScreen():
     lbl.config(anchor=CENTER)
     lbl.pack(pady=25)
 
-    txt = Entry(window, width=20, show="*")
+    txt = Entry(window, width=30, show="*_*")
     txt.pack()
     txt.focus()
 
@@ -284,6 +284,8 @@ def vaultScreen():
     for widget in window.winfo_children():
         widget.destroy()
 
+    
+
     def addEntry():
         text1 = "Website"
         text2 = "Username"
@@ -305,18 +307,20 @@ def vaultScreen():
 
     window.geometry('750x550')
     window.resizable(height=None, width=None)
-    lbl = Label(window, text="Password Vault")
+    lbl = Label(window, text="Password Vault", font=("Times", 20, 'bold'))
     lbl.grid(column=1)
-
-    btn = Button(window, text="+", command=addEntry)
+    btn = Button(window, text="Go back to Menu", command=menu)
     btn.grid(column=1, pady=10)
 
-    lbl = Label(window, text="Website")
-    lbl.grid(row=2, column=0, padx=80)
-    lbl = Label(window, text="Username")
-    lbl.grid(row=2, column=1, padx=80)
-    lbl = Label(window, text="Password")
-    lbl.grid(row=2, column=2, padx=80)
+    #btn = Button(window, text="+", command=addEntry)
+    #btn.grid(column=1, pady=10)
+
+    lbl = Label(window, text="Website", font=("Helvetica", 12, 'bold'))
+    lbl.grid(row=2, column=0, padx=90)
+    lbl = Label(window, text="Username", font=("Helvetica", 12, 'bold'))
+    lbl.grid(row=2, column=1, padx=90)
+    lbl = Label(window, text="Password", font=("Helvetica", 12, 'bold'))
+    lbl.grid(row=2, column=2, padx=90)
 
     cursor.execute('SELECT * FROM vault')
     if (cursor.fetchall() != None):
@@ -349,10 +353,11 @@ def addpass():
 
     for widget in window.winfo_children():
         widget.destroy()
-
+    
     window['background'] = '#ccffff'
 
     def addEntry():
+        
         text1 = "Website"
         text2 = "Username"
         text3 = "Password"
@@ -364,15 +369,18 @@ def addpass():
         VALUES(?, ?, ?) """
         cursor.execute(insert_fields, (website, username, password))
         db.commit()
+        lbl = Label(window, text=" Your Credentials saved securely.", font=('Times', 20, 'bold'))
+        lbl.config(anchor=CENTER)
+        #lbl.pack(pady=25)
 
-        # vaultScreen()
+        addpass()
 
     # def removeEntry(input):
         #cursor.execute("DELETE FROM vault WHERE id = ?", (input,))
         # db.commit()
         # vaultScreen()
 
-    window.geometry('750x550')
+    window.geometry('550x350')
     window.resizable(height=None, width=None)
     lbl = Label(window, text="Password Vault", bg='#ccffff', font=('Times', 30, 'bold'))
     lbl.grid(column=1, pady=5)
@@ -383,12 +391,12 @@ def addpass():
     btn = Button(window, text="Add Credentials", command=addEntry)
     btn.grid(column=1, pady=10)
 
-    lbl = Label(window, text="Website", font=("Helvetica", 16, "underline"))
+    """ lbl = Label(window, text="Website", font=("Helvetica", 16, "underline"))
     lbl.grid(row=3, column=0, padx=80)
     lbl = Label(window, text="Username", font=("Helvetica", 16, "underline"))
     lbl.grid(row=3, column=1, padx=80)
     lbl = Label(window, text="Password", font=("Helvetica", 16, "underline"))
-    lbl.grid(row=3, column=2, padx=80)
+    lbl.grid(row=3, column=2, padx=80) """
 
 
 # removed this so that all the passwords are not seen in the very first go
@@ -464,6 +472,8 @@ def showpass():
 
             btn = Button(window, text="Delete", command=  partial(removeEntry, array[i][0]))
             btn.grid(column=3, row=(i+3), pady=10)
+            btn2 = Button(window, text="Go back to Menu", command=menu)
+            btn2.grid(column=1, pady=10)
 
             i = i +1
 
@@ -511,14 +521,14 @@ def showpass():
             lbl3 = Label(window, text=(decrypt(array[i][3], encryptionKey)), font=("Helvetica", 12))
             lbl3.grid(column=2, row=(i+4), pady=5)
 
-            #btn = Button(window, text="Delete", command=  partial(removeEntry, array[i][0]))
-            #btn.grid(column=3, row=(i+3), pady=10)
+            btn = Button(window, text="Delete", command=  partial(removeEntry, array[i][0]))
+            btn.grid(column=3, row=(i+3), pady=10)
 
             i = i + 1
 
             cursor.execute('SELECT * FROM vault')
             if (len(cursor.fetchall()) <= i):
-                break """
+                break """ 
 
 
 
