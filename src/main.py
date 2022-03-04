@@ -425,6 +425,11 @@ def showpass():
 
     window['background'] = '#ccffff'
 
+    def removeEntry(input):
+        cursor.execute("DELETE FROM vault WHERE id = ?", (input,))
+        db.commit()
+        vaultScreen()
+
     def addEntry():
         text1 = "Website"
         text2 = "Username"
@@ -438,14 +443,40 @@ def showpass():
         cursor.execute(insert_fields, (website, username, password))
         db.commit()
 
+        #temporary trial for delete of password 
+
+        cursor.execute('SELECT * FROM vault')
+    if (cursor.fetchall() != None):
+        i = 0
+        while True:
+            cursor.execute('SELECT * FROM vault')
+            array = cursor.fetchall()
+
+            if (len(array) == 0):
+                break
+
+            lbl1 = Label(window, text=(decrypt(array[i][1], encryptionKey)), font=("Helvetica", 12))
+            lbl1.grid(column=0, row=(i+4), pady = 5)
+            lbl2 = Label(window, text=(decrypt(array[i][2], encryptionKey)), font=("Helvetica", 12))
+            lbl2.grid(column=1, row=(i+4), pady = 5)
+            lbl3 = Label(window, text=(decrypt(array[i][3], encryptionKey)), font=("Helvetica", 12))
+            lbl3.grid(column=2, row=(i+4), pady = 5)
+
+            btn = Button(window, text="Delete", command=  partial(removeEntry, array[i][0]))
+            btn.grid(column=3, row=(i+3), pady=10)
+
+            i = i +1
+
+            cursor.execute('SELECT * FROM vault')
+            if (len(cursor.fetchall()) <= i):
+                break
+
         vaultScreen()
 
-    # def removeEntry(input):
-        #cursor.execute("DELETE FROM vault WHERE id = ?", (input,))
-        # db.commit()
-        # vaultScreen()
-
-    window.geometry('750x550')
+    
+# remove this later onn
+#  
+    """ window.geometry('750x550')
     window.resizable(height=None, width=None)
     lbl = Label(window, text="Password Vault")
     lbl.grid(column=1, pady=5)
@@ -487,7 +518,10 @@ def showpass():
 
             cursor.execute('SELECT * FROM vault')
             if (len(cursor.fetchall()) <= i):
-                break
+                break """
+
+
+
 
 
 cursor.execute('SELECT * FROM masterpassword')
