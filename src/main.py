@@ -1,6 +1,7 @@
 #!/bin/python3
 import sqlite3
 import hashlib
+import os
 from tkinter import *
 from tkinter import simpledialog
 from functools import partial
@@ -270,13 +271,10 @@ def menu():
     def ShowPassword():
         showpass()
 
-    btn = Button(window, text="Show all Passwords", command=ShowPassword)
+    btn = Button(window, text="Show all Passwords", command = ShowPassword)
     btn.grid(row=5, column=0, padx=50, pady=5)
 
-    btn = Button(window, text="Update password")
-    btn.grid(row=9, column=0, padx=50, pady=5)
-
-    btn = Button(window, text="Delete the user")
+    btn = Button(window, text="Delete the user", command = vaultDel)
     btn.grid(row=11, column=0, padx=50, pady=5)
 
 
@@ -354,7 +352,7 @@ def addpass():
     for widget in window.winfo_children():
         widget.destroy()
     
-    window['background'] = '#ccffff'
+    window['background'] = '#32a88b'
 
     def addEntry():
         
@@ -382,7 +380,7 @@ def addpass():
 
     window.geometry('550x350')
     window.resizable(height=None, width=None)
-    lbl = Label(window, text="Password Vault", bg='#ccffff', font=('Times', 30, 'bold'))
+    lbl = Label(window, text="Password Vault", bg='#32a88b', font=('Times', 30, 'bold'))
     lbl.grid(column=1, pady=5)
 
     btn2 = Button(window, text="Go back to Menu", command=menu)
@@ -431,7 +429,7 @@ def showpass():
     for widget in window.winfo_children():
         widget.destroy()
 
-    window['background'] = '#ccffff'
+    window['background'] = '#32a88b'
 
     def removeEntry(input):
         cursor.execute("DELETE FROM vault WHERE id = ?", (input,))
@@ -483,6 +481,26 @@ def showpass():
 
         vaultScreen()
 
+'''
+                    DELETE DATABASE
+'''
+
+def vaultDel():
+    for widget in window.winfo_children():
+        widget.destroy()
+    window.geometry('550x350')
+    
+    def delDB():
+        for widget in window.winfo_children():
+            widget.destroy()
+        window.geometry('550x350')
+        lbl = Label(window, text="Delete PassVault", bg='#32a88b', font=('Times', 30, 'bold'))
+        lbl.grid(column=1, pady=5)
+        os.system("del /f password_vault.db")
+    btn2 = Button(window, text="Sure you want to delete ?", command=delDB)
+    btn2.grid(column=1, pady=10)
+    
+    
     
 # remove this later onn
 #  
