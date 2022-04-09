@@ -56,10 +56,10 @@ password TEXT NOT NULL);
 """)
 
 # PassVault LOGO :)
-""" def icon():
+'''def icon():
     app = Tk()
     app.iconbitmap(r'C:\All Files\Source codes\Password Database\PassVault 2.0\passLogo.ico')
-    app.mainloop() """
+    app.mainloop() '''
 
 
 # Create PopUp
@@ -121,6 +121,7 @@ def firstTimeScreen():
             recoveryKey = hashPassword(key.encode('utf-8'))
 
             global encryptionKey
+
             encryptionKey = base64.urlsafe_b64encode(
                 kdf.derive(txt.get().encode()))
 
@@ -271,7 +272,7 @@ def menu():
     def ShowPassword():
         showpass()
 
-    btn = Button(window, text="Show all Passwords", command = ShowPassword)
+    btn = Button(window, text="Manage Passwords", command = ShowPassword)
     btn.grid(row=5, column=0, padx=50, pady=5)
 
     btn = Button(window, text="Delete the user", command = vaultDel)
@@ -296,14 +297,18 @@ def vaultScreen():
         cursor.execute(insert_fields, (website, username, password))
         db.commit()
 
+        
         vaultScreen()
 
     def removeEntry(input):
         cursor.execute("DELETE FROM vault WHERE id = ?", (input,))
         db.commit()
         vaultScreen()
+    
+    def copyPass():
+        pyperclip.copy(lbl1.cget("password"))
 
-    window.geometry('750x550')
+    window.geometry('1000x550')
     window.resizable(height=None, width=None)
     lbl = Label(window, text="Password Vault", font=("Times", 20, 'bold'))
     lbl.grid(column=1)
@@ -340,6 +345,11 @@ def vaultScreen():
             btn = Button(window, text="Delete", command=partial(removeEntry, array[i][0]))
             btn.grid(column=3, row=(i+3), pady=10)
 
+            btn = Button(window, text="Copy Key", command = copyPass)
+            btn.grid(column=4, row=(i+3), pady=10)
+            
+            
+            
             i = i + 1
 
             cursor.execute('SELECT * FROM vault')
@@ -378,7 +388,7 @@ def addpass():
         # db.commit()
         # vaultScreen()
 
-    window.geometry('550x350')
+    window.geometry('300x150')
     window.resizable(height=None, width=None)
     lbl = Label(window, text="Password Vault", bg='#32a88b', font=('Times', 30, 'bold'))
     lbl.grid(column=1, pady=5)
