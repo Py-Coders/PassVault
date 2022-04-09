@@ -71,7 +71,7 @@ def popUp(text):
 
 # Opening window
 window = Tk()
-window['background'] = '#32a88b'
+window['background'] = '#89dcc7'
 
 window.update()
 
@@ -93,7 +93,7 @@ def firstTimeScreen():
 
     # icon()
 
-    lbl = Label(window, text="Create a  Password", font=('Times', 20, 'bold'), bg="#32a88b")  # showing text
+    lbl = Label(window, text="Create a  Password", font=('Times', 20, 'bold'), bg="#89dcc7")  # showing text
     lbl.config(anchor=CENTER)  # position
     lbl.pack(pady=5)
 
@@ -101,7 +101,7 @@ def firstTimeScreen():
     txt.pack()
     txt.focus()
 
-    lbl1 = Label(window, text="Re-enter password", font=('Times', 20, 'bold'), bg="#32a88b")
+    lbl1 = Label(window, text="Re-enter password", font=('Times', 20, 'bold'), bg="#89dcc7")
     lbl1.config(anchor=CENTER)
     lbl1.pack(pady=5)
 
@@ -142,8 +142,8 @@ def recoveryScreen(key):
         widget.destroy()
 
     window.geometry('700x300')
-    lbl = Label(window, text="Copy and save this key to recover account later onn", font=('Times', 20, 'bold'), bg="#32a88b")
-    lbl1 = Label(window, text="Itne jaldi bhul gayee ?", font=('Times', 20, 'bold'), bg="#32a88b")
+    lbl = Label(window, text="Copy and save this key to recover account later onn", font=('Times', 20, 'bold'), bg="#89dcc7")
+    lbl1 = Label(window, text="Itne jaldi bhul gayee ?", font=('Times', 20, 'bold'), bg="#89dcc7")
     lbl.config(anchor=CENTER)
     lbl.pack(pady=5)
 
@@ -172,7 +172,7 @@ def resetScreen():
         widget.destroy()
 
     window.geometry('450x150')
-    lbl = Label(window, text="Enter Recovery Key", bg="#32a88b", font=('Times', 20, 'bold'))
+    lbl = Label(window, text="Enter Recovery Key", bg="#89dcc7", font=('Times', 20, 'bold'))
     lbl.config(anchor=CENTER)
     lbl.pack(pady=10)
 
@@ -210,7 +210,7 @@ def loginScreen():
 
     window.geometry('500x250')
 
-    lbl = Label(window, text="Enter  Master Password", font=('Times', 20, 'bold'), bg="#32a88b")
+    lbl = Label(window, text="Enter  Master Password", font=('Times', 20, 'bold'), bg="#89dcc7")
     lbl.config(anchor=CENTER)
     lbl.pack(pady=25)
 
@@ -218,14 +218,14 @@ def loginScreen():
     txt.pack()
     txt.focus()
 
-    lbl1 = Label(window, bg="#32a88b")
+    lbl1 = Label(window, bg="#89dcc7")
     lbl1.config(anchor=CENTER)
     lbl1.pack(side=TOP)
 
     def getMasterPassword():
         checkHashedPassword = hashPassword(txt.get().encode('utf-8'))
         global encryptionKey
-        encryptionKey = base64.urlsafe_b64encode(kdf.derive(txt.get().encode()))
+        #encryptionKey = base64.urlsafe_b64encode(kdf.derive(txt.get().encode()))
         cursor.execute('SELECT * FROM masterpassword WHERE id = 1 AND password = ?', [(checkHashedPassword)])
         return cursor.fetchall()
 
@@ -259,7 +259,7 @@ def menu():
         widget.destroy()
     window.geometry('250x200')
 
-    lbl = Label(window, text=" What you want to do ? ", bg="#32a88b", font=('Helvetica', 10, 'bold'))
+    lbl = Label(window, text=" What you want to do ? ", bg="#89dcc7", font=('Helvetica', 10, 'bold'))
     lbl.config(anchor=CENTER)
     lbl.grid(row=1, column=0, padx=50, pady=5)
 
@@ -310,7 +310,7 @@ def vaultScreen():
 
     window.geometry('1000x550')
     window.resizable(height=None, width=None)
-    lbl = Label(window, text="Password Vault", font=("Times", 20, 'bold'))
+    lbl = Label(window, text="Password Vault", font=("Times", 20, 'bold'),bg="#89dcc7")
     lbl.grid(column=1)
     btn = Button(window, text="Go back to Menu", command=menu)
     btn.grid(column=1, pady=10)
@@ -318,11 +318,11 @@ def vaultScreen():
     #btn = Button(window, text="+", command=addEntry)
     #btn.grid(column=1, pady=10)
 
-    lbl = Label(window, text="Website", font=("Helvetica", 12, 'bold'))
+    lbl = Label(window, text="Website",bg="#89dcc7" , font=("Helvetica", 12, 'bold'))
     lbl.grid(row=2, column=0, padx=90)
-    lbl = Label(window, text="Username", font=("Helvetica", 12, 'bold'))
+    lbl = Label(window, text="Username", bg="#89dcc7", font=("Helvetica", 12, 'bold'))
     lbl.grid(row=2, column=1, padx=90)
-    lbl = Label(window, text="Password", font=("Helvetica", 12, 'bold'))
+    lbl = Label(window, text="Password", bg="#89dcc7", font=("Helvetica", 12, 'bold'))
     lbl.grid(row=2, column=2, padx=90)
 
     cursor.execute('SELECT * FROM vault')
@@ -335,11 +335,11 @@ def vaultScreen():
             if (len(array) == 0):
                 break
 
-            lbl1 = Label(window, text=(decrypt(array[i][1], encryptionKey)), font=("Helvetica", 12))
+            lbl1 = Label(window, text=(decrypt(array[i][1], encryptionKey)), font=("Helvetica", 12), bg="#89dcc7" )
             lbl1.grid(column=0, row=(i+3))
-            lbl2 = Label(window, text=(decrypt(array[i][2], encryptionKey)), font=("Helvetica", 12))
+            lbl2 = Label(window, text=(decrypt(array[i][2], encryptionKey)), font=("Helvetica", 12), bg="#89dcc7")
             lbl2.grid(column=1, row=(i+3))
-            lbl3 = Label(window, text=(decrypt(array[i][3], encryptionKey)), font=("Helvetica", 12))
+            lbl3 = Label(window, text=(decrypt(array[i][3], encryptionKey)), font=("Helvetica", 12), bg="#89dcc7")
             lbl3.grid(column=2, row=(i+3))
 
             btn = Button(window, text="Delete", command=partial(removeEntry, array[i][0]))
@@ -362,7 +362,7 @@ def addpass():
     for widget in window.winfo_children():
         widget.destroy()
     
-    window['background'] = '#32a88b'
+    window['background'] = '#89dcc7'
 
     def addEntry():
         
@@ -390,7 +390,7 @@ def addpass():
 
     window.geometry('300x150')
     window.resizable(height=None, width=None)
-    lbl = Label(window, text="Password Vault", bg='#32a88b', font=('Times', 30, 'bold'))
+    lbl = Label(window, text="Password Vault", bg='#89dcc7', font=('Times', 30, 'bold'))
     lbl.grid(column=1, pady=5)
 
     btn2 = Button(window, text="Go back to Menu", command=menu)
@@ -439,7 +439,7 @@ def showpass():
     for widget in window.winfo_children():
         widget.destroy()
 
-    window['background'] = '#32a88b'
+    window['background'] = '#89dcc7'
 
     def removeEntry(input):
         cursor.execute("DELETE FROM vault WHERE id = ?", (input,))
@@ -504,7 +504,7 @@ def vaultDel():
         for widget in window.winfo_children():
             widget.destroy()
         window.geometry('550x350')
-        lbl = Label(window, text="Delete PassVault", bg='#32a88b', font=('Times', 30, 'bold'))
+        lbl = Label(window, text="Delete PassVault", bg='#89dcc7', font=('Times', 30, 'bold'))
         lbl.grid(column=1, pady=5)
         os.system("del /f password_vault.db")
     btn2 = Button(window, text="Sure you want to delete ?", command=delDB)
