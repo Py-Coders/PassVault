@@ -225,7 +225,7 @@ def loginScreen():
     def getMasterPassword():
         checkHashedPassword = hashPassword(txt.get().encode('utf-8'))
         global encryptionKey
-        encryptionKey = base64.urlsafe_b64encode(kdf.derive(txt.get().encode()))
+        #encryptionKey = base64.urlsafe_b64encode(kdf.derive(txt.get().encode()))
         cursor.execute('SELECT * FROM masterpassword WHERE id = 1 AND password = ?', [(checkHashedPassword)])
         return cursor.fetchall()
 
@@ -310,7 +310,7 @@ def vaultScreen():
 
     window.geometry('1000x550')
     window.resizable(height=None, width=None)
-    lbl = Label(window, text="Password Vault", font=("Times", 20, 'bold'))
+    lbl = Label(window, text="Password Vault", font=("Times", 20, 'bold'),bg="#89dcc7")
     lbl.grid(column=1)
     btn = Button(window, text="Go back to Menu", command=menu)
     btn.grid(column=1, pady=10)
@@ -318,11 +318,11 @@ def vaultScreen():
     #btn = Button(window, text="+", command=addEntry)
     #btn.grid(column=1, pady=10)
 
-    lbl = Label(window, text="Website", font=("Helvetica", 12, 'bold'))
+    lbl = Label(window, text="Website",bg="#89dcc7" , font=("Helvetica", 12, 'bold'))
     lbl.grid(row=2, column=0, padx=90)
-    lbl = Label(window, text="Username", font=("Helvetica", 12, 'bold'))
+    lbl = Label(window, text="Username", bg="#89dcc7", font=("Helvetica", 12, 'bold'))
     lbl.grid(row=2, column=1, padx=90)
-    lbl = Label(window, text="Password", font=("Helvetica", 12, 'bold'))
+    lbl = Label(window, text="Password", bg="#89dcc7", font=("Helvetica", 12, 'bold'))
     lbl.grid(row=2, column=2, padx=90)
 
     cursor.execute('SELECT * FROM vault')
@@ -335,11 +335,11 @@ def vaultScreen():
             if (len(array) == 0):
                 break
 
-            lbl1 = Label(window, text=(decrypt(array[i][1], encryptionKey)), font=("Helvetica", 12))
+            lbl1 = Label(window, text=(decrypt(array[i][1], encryptionKey)), font=("Helvetica", 12), bg="#89dcc7" )
             lbl1.grid(column=0, row=(i+3))
-            lbl2 = Label(window, text=(decrypt(array[i][2], encryptionKey)), font=("Helvetica", 12))
+            lbl2 = Label(window, text=(decrypt(array[i][2], encryptionKey)), font=("Helvetica", 12), bg="#89dcc7")
             lbl2.grid(column=1, row=(i+3))
-            lbl3 = Label(window, text=(decrypt(array[i][3], encryptionKey)), font=("Helvetica", 12))
+            lbl3 = Label(window, text=(decrypt(array[i][3], encryptionKey)), font=("Helvetica", 12), bg="#89dcc7")
             lbl3.grid(column=2, row=(i+3))
 
             btn = Button(window, text="Delete", command=partial(removeEntry, array[i][0]))
@@ -414,17 +414,22 @@ def addpass():
         while True:
             cursor.execute('SELECT * FROM vault')
             array = cursor.fetchall()
+
             if (len(array) == 0):
                 break
+
             lbl1 = Label(window, text=(decrypt(array[i][1], encryptionKey)), font=("Helvetica", 12))
             lbl1.grid(column=0, row=(i+4), pady = 5)
             lbl2 = Label(window, text=(decrypt(array[i][2], encryptionKey)), font=("Helvetica", 12))
             lbl2.grid(column=1, row=(i+4), pady = 5)
             lbl3 = Label(window, text=(decrypt(array[i][3], encryptionKey)), font=("Helvetica", 12))
             lbl3.grid(column=2, row=(i+4), pady = 5)
+
             #btn = Button(window, text="Delete", command=  partial(removeEntry, array[i][0]))
             #btn.grid(column=3, row=(i+3), pady=10)
+
             i = i +1
+
             cursor.execute('SELECT * FROM vault')
             if (len(cursor.fetchall()) <= i):
                 break """
@@ -500,18 +505,10 @@ def vaultDel():
             widget.destroy()
         window.geometry('550x350')
         lbl = Label(window, text="Delete PassVault", bg='#89dcc7', font=('Times', 30, 'bold'))
-        lbl.config(anchor=CENTER)  # position
-        lbl.pack(pady=5)
-        lbl1 = Label(window, text="Deletion completed succesfully.",bg='#89dcc7', font=("Helvetica", 12))
-        lbl1.config(anchor=CENTER)  # position
-        lbl1.pack(pady=5) 
+        lbl.grid(column=1, pady=5)
         os.system("del /f password_vault.db")
-    lbl = Label(window, text="Delete PassVault", bg='#89dcc7', font=('Times', 30, 'bold'))
-    lbl.config(anchor=CENTER)  # position
-    lbl.pack(pady=5)
     btn2 = Button(window, text="Sure you want to delete ?", command=delDB)
-    btn2.config(anchor=CENTER)  # position
-    btn2.pack(pady=5)
+    btn2.grid(column=1, pady=10)
     
     
     
@@ -521,33 +518,42 @@ def vaultDel():
     window.resizable(height=None, width=None)
     lbl = Label(window, text="Password Vault")
     lbl.grid(column=1, pady=5)
+
     #btn2 = Button(window, text="Go back to Menu", command=menu)
     #btn2.grid(row=1, column=0)
+
     btn = Button(window, text="Go back to Menu", command=menu)
     btn.grid(column=1, pady=10)
+
     lbl = Label(window, text="Website", font=("Helvetica", 16, "underline"))
     lbl.grid(row=3, column=0, padx=80)
     lbl = Label(window, text="Username", font=("Helvetica", 16, "underline"))
     lbl.grid(row=3, column=1, padx=80)
     lbl = Label(window, text="Password", font=("Helvetica", 16, "underline"))
     lbl.grid(row=3, column=2, padx=80)
+
     cursor.execute('SELECT * FROM vault')
     if (cursor.fetchall() != None):
         i = 0
         while True:
             cursor.execute('SELECT * FROM vault')
             array = cursor.fetchall()
+
             if (len(array) == 0):
                 break
+
             lbl1 = Label(window, text=(decrypt(array[i][1], encryptionKey)), font=("Helvetica", 12))
             lbl1.grid(column=0, row=(i+4), pady=5)
             lbl2 = Label(window, text=(decrypt(array[i][2], encryptionKey)), font=("Helvetica", 12))
             lbl2.grid(column=1, row=(i+4), pady=5)
             lbl3 = Label(window, text=(decrypt(array[i][3], encryptionKey)), font=("Helvetica", 12))
             lbl3.grid(column=2, row=(i+4), pady=5)
+
             btn = Button(window, text="Delete", command=  partial(removeEntry, array[i][0]))
             btn.grid(column=3, row=(i+3), pady=10)
+
             i = i + 1
+
             cursor.execute('SELECT * FROM vault')
             if (len(cursor.fetchall()) <= i):
                 break """ 
